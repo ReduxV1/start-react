@@ -129,7 +129,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <span className="contact-row-label">Email</span>
-                  <a href="mailto:info@meridian.ru" className="contact-row-val">info@meridian.ru</a>
+                  <a href="mailto:info@sTa34bot.ru" className="contact-row-val">info@sTa34bot.ru</a>
                 </div>
               </div>
 
@@ -141,7 +141,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <span className="contact-row-label">Telegram</span>
-                  <a href="https://t.me/meridian" target="_blank" rel="noopener noreferrer" className="contact-row-val">@meridian</a>
+                  <a href="https://t.me/sTa34bot" target="_blank" rel="noopener noreferrer" className="contact-row-val">@sTa34bot</a>
                 </div>
               </div>
 
