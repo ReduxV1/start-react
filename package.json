@@ -1,20 +1,17 @@
 {
   "name": "start-metal",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -n web,api -c cyan,green \"vite\" \"node server/index.js\"",
+    "dev": "concurrently -n web,api -c cyan,green \"vite\" \"python -m uvicorn main:app --app-dir api --port 3001 --reload\"",
     "dev:web": "vite",
-    "dev:api": "node server/index.js",
+    "dev:api": "python -m uvicorn main:app --app-dir api --port 3001 --reload",
     "build": "vite build",
-    "start": "node server/index.js",
+    "start": "python -m uvicorn main:app --app-dir api --port 3001",
     "preview": "vite preview"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.21.0",
-    "nodemailer": "^6.9.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2"

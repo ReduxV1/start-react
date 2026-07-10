@@ -6,6 +6,7 @@ import Home from './pages/Home.jsx';
 import Services from './pages/Services.jsx';
 import Works from './pages/Works.jsx';
 import Contact from './pages/Contact.jsx';
+import Admin from './pages/Admin.jsx';
 
 /* Скролл наверх при смене маршрута (+ поддержка якорей #laser и т.п.) */
 function ScrollManager() {
@@ -34,6 +35,7 @@ export default function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/works" element={<Works />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
       <Footer />
     </>

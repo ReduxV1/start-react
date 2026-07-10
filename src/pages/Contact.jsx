@@ -141,7 +141,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <span className="contact-row-label">Telegram</span>
-                  <a href="https://t.me/sTa34bot" target="_blank" rel="noopener noreferrer" className="contact-row-val">@sTa34bot</a>
+                  <a href="https://t.me/meridian" target="_blank" rel="noopener noreferrer" className="contact-row-val">@meridian</a>
                 </div>
               </div>
 
