@@ -1,0 +1,300 @@
+/* =============================================
+   CONTACT.CSS — Страница контактов
+   ============================================= */
+
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 72px;
+  align-items: start;
+}
+
+/* ─── LEFT ─────────────────────────────────── */
+.contact-intro {
+  font-family: var(--ff-display);
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--muted-hi);
+  line-height: 1.55;
+  margin-bottom: 48px;
+}
+
+.contact-rows { display: flex; flex-direction: column; }
+
+.contact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-row:first-child { border-top: 1px solid var(--border); }
+
+.contact-row-icon {
+  width: 36px; height: 36px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(91,138,245,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+  border-radius: 2px;
+}
+
+.contact-row-icon svg { width: 15px; height: 15px; }
+
+.contact-row-label {
+  font-family: var(--ff-cond);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.contact-row-val {
+  font-size: 16px;
+  color: var(--text);
+  transition: color 0.3s;
+}
+
+a.contact-row-val:hover { color: var(--accent); }
+
+/* OZON BLOCK */
+.contact-ozon {
+  background: linear-gradient(135deg, #010d2a, #021945);
+  border: 1px solid rgba(0,91,255,0.2);
+  border-radius: 2px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.contact-ozon-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ozon-logobadge {
+  font-family: var(--ff-cond);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: #fff;
+  color: #005bff;
+  padding: 3px 10px;
+  border-radius: 3px;
+  line-height: 1.4;
+}
+
+.contact-ozon-head span {
+  font-family: var(--ff-cond);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+.contact-ozon p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+/* AVAIL */
+.contact-avail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.avail-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  flex-shrink: 0;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.5); }
+  50%      { box-shadow: 0 0 0 7px rgba(74,222,128,0); }
+}
+
+.contact-avail span {
+  font-family: var(--ff-cond);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ─── FORM ─────────────────────────────────── */
+.form-wrap {
+  background: var(--ink-2);
+  border: 1px solid var(--border);
+  padding: 44px;
+  border-radius: 2px;
+}
+
+.form-wrap h3 {
+  font-family: var(--ff-display);
+  font-size: 26px;
+  font-weight: 400;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.form { display: flex; flex-direction: column; gap: 20px; }
+
+.form-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.field { display: flex; flex-direction: column; gap: 8px; }
+
+.field label {
+  font-family: var(--ff-cond);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.field input,
+.field select,
+.field textarea {
+  background: var(--ink-3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--ff-body);
+  font-size: 15px;
+  font-weight: 300;
+  padding: 13px 16px;
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 0.3s;
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%235b8af5' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.field select option { background: var(--ink-2); color: var(--text); }
+.field input:focus,
+.field select:focus,
+.field textarea:focus { border-color: var(--accent); }
+.field input::placeholder,
+.field textarea::placeholder { color: var(--muted); opacity: 0.6; }
+.field textarea { resize: vertical; min-height: 120px; }
+
+/* Checkboxes */
+.svc-checks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.svc-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink-3);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.25s;
+  user-select: none;
+}
+
+.svc-check input { display: none; }
+
+.check-box {
+  width: 16px; height: 16px;
+  border: 1px solid var(--border-hi);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s;
+}
+
+.svc-check.on { border-color: var(--accent); background: var(--accent-dim); }
+.svc-check.on .check-box { background: var(--accent); border-color: var(--accent); }
+
+.check-box::after {
+  content: '';
+  width: 8px; height: 5px;
+  border-left: 1.5px solid #08090c;
+  border-bottom: 1.5px solid #08090c;
+  transform: rotate(-45deg) translateY(-1px);
+  display: none;
+}
+
+.svc-check.on .check-box::after { display: block; }
+
+.svc-check span {
+  font-size: 13px;
+  color: var(--muted-hi);
+  transition: color 0.25s;
+  line-height: 1.3;
+}
+
+.svc-check.on span { color: var(--text); }
+
+/* Success */
+.form-ok {
+  display: none;
+  background: rgba(74,222,128,0.07);
+  border: 1px solid rgba(74,222,128,0.25);
+  color: #4ade80;
+  font-family: var(--ff-cond);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.form-ok.show { display: block; }
+
+/* ─── RESPONSIVE CONTACT ───────────────────── */
+@media (max-width: 960px) {
+  .contact-wrap { grid-template-columns: 1fr; gap: 48px; }
+  .form-wrap { padding: 28px 24px; }
+}
+
+@media (max-width: 480px) {
+  .form-duo { grid-template-columns: 1fr; }
+  .svc-checks { grid-template-columns: 1fr; }
+}
+/* Error message — в стиле form-ok, но красный */
+.form-err {
+  display: none;
+  background: rgba(248,113,113,0.07);
+  border: 1px solid rgba(248,113,113,0.25);
+  color: #f87171;
+  font-family: var(--ff-cond);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.form-err.show { display: block; }

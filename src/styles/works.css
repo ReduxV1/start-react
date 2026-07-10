@@ -1,0 +1,406 @@
+/* =============================================
+   WORKS.CSS — Галерея 3D-моделей
+   ============================================= */
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+/* ─── CARD ──────────────────────────────────── */
+.work-card {
+  background: var(--ink-2);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.3s var(--ease);
+}
+
+.work-card:hover { border-color: var(--border-hi); }
+
+/* ─── IMAGE WRAP ────────────────────────────── */
+.work-img-wrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--surface);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.work-img-wrap img,
+.work-img-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.88;
+  transition: transform 0.55s var(--ease), opacity 0.3s;
+}
+
+.work-card:hover .work-img-wrap img,
+.work-card:hover .work-img-wrap video {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+/* Placeholder когда картинки ещё нет */
+.work-img-wrap img[src=""],
+.work-img-wrap img:not([src]) {
+  background: linear-gradient(160deg, var(--ink-3), var(--surface));
+  min-height: 200px;
+}
+
+/* ─── OVERLAY ───────────────────────────────── */
+.work-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(8,9,12,0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.work-card:hover .work-overlay {
+  background: rgba(8,9,12,0.25);
+}
+
+.work-zoom {
+  font-size: 28px;
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.6) translate(-4px, 4px);
+  transition: all 0.35s var(--ease);
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+  line-height: 1;
+}
+
+.work-card:hover .work-zoom {
+  opacity: 1;
+  transform: scale(1) translate(0, 0);
+}
+
+/* ─── TAG ───────────────────────────────────── */
+.work-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-family: var(--ff-cond);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text);
+  background: rgba(8,9,12,0.72);
+  border: 1px solid var(--border-hi);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 5px 12px;
+  border-radius: 2px;
+}
+
+/* ─── INFO ──────────────────────────────────── */
+.work-info {
+  padding: 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  border-top: 1px solid var(--border);
+}
+
+.work-info h3 {
+  font-family: var(--ff-display);
+  font-size: 17px;
+  font-weight: 400;
+  transition: color 0.3s;
+}
+
+.work-card:hover .work-info h3 { color: var(--accent); }
+
+.work-info p {
+  font-size: 13px;
+  color: var(--muted-hi);
+  line-height: 1.55;
+}
+
+/* ─── LIGHTBOX ──────────────────────────────── */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: rgba(8,9,12,0.93);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  cursor: zoom-out;
+}
+
+.lightbox.open { display: flex; }
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border: 1px solid var(--border-hi);
+  border-radius: 2px;
+  animation: lightboxIn 0.3s var(--ease);
+}
+
+@keyframes lightboxIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: none;
+  border: 1px solid var(--border-hi);
+  color: var(--muted-hi);
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, border-color 0.2s;
+  line-height: 1;
+}
+
+.lightbox-close:hover { color: var(--text); border-color: var(--accent); }
+
+/* ─── RESPONSIVE ────────────────────────────── */
+@media (max-width: 1024px) {
+  .works-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .works-grid { grid-template-columns: 1fr; }
+  .work-info { padding: 16px 18px; }
+}
+/* ─── WORKS HINT ────────────────────────────── */
+.works-hint {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--ff-cond);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ─── 3D BADGE ON CARD ──────────────────────── */
+.work-3d-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ff-cond);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #fff;
+  background: var(--accent);
+  padding: 7px 16px;
+  border-radius: 2px;
+  opacity: 0;
+  transform: scale(0.8) translateY(6px);
+  transition: all 0.3s var(--ease);
+}
+
+.work-card:hover .work-3d-badge {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* ─── 3D MODAL ──────────────────────────────── */
+.modal3d {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal3d.open { display: flex; }
+
+/* Фон */
+.modal3d-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8,9,12,0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: fadeIn 0.25s ease;
+}
+
+/* Окно */
+.modal3d-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 900px;
+  background: var(--ink-2);
+  border: 1px solid var(--border-hi);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  animation: modal3dIn 0.3s var(--ease);
+  overflow: hidden;
+}
+
+@keyframes modal3dIn {
+  from { opacity: 0; transform: scale(0.96) translateY(16px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Шапка */
+.modal3d-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.modal3d-tag {
+  font-family: var(--ff-cond);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.modal3d-title {
+  font-family: var(--ff-display);
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.modal3d-desc {
+  font-size: 13px;
+  color: var(--muted-hi);
+}
+
+.modal3d-close {
+  width: 38px; height: 38px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted-hi);
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.25s, color 0.25s;
+}
+
+.modal3d-close:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Вьювер */
+.modal3d-viewer-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 400px;
+  background: var(--ink-3);
+}
+
+/* Прогресс */
+.modal3d-progress-wrap {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--border);
+  z-index: 10;
+}
+
+.modal3d-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.2s ease, opacity 0.4s ease;
+}
+
+/* Постер-заглушка */
+.modal3d-poster {
+  position: absolute;
+  inset: 0;
+}
+
+.modal3d-poster-inner {
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--muted);
+}
+
+.modal3d-poster-inner span {
+  font-family: var(--ff-cond);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Подсказка управления */
+.modal3d-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--ff-cond);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(8,9,12,0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  padding: 7px 16px;
+  border-radius: 2px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* Футер */
+.modal3d-foot {
+  padding: 18px 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+/* Адаптив */
+@media (max-width: 600px) {
+  .modal3d { padding: 0; }
+  .modal3d-inner { max-height: 100svh; border-radius: 0; }
+  .modal3d-viewer-wrap { min-height: 280px; }
+  .modal3d-head { padding: 18px 18px 14px; }
+  .modal3d-foot { padding: 14px 18px; }
+}
