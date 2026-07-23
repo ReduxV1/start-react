@@ -1,5 +1,10 @@
--e node_modules
+node_modules
 dist
 .env
 api/leads.db*
 __pycache__
+
+# Медиа-копии для public/ — оригиналы лежат в models/, копируются локально (см. README)
+public/models/*.glb
+public/models/*.mp4
+public/models/*.jpg
