@@ -5,6 +5,7 @@ import App from './App.jsx';
 
 import './styles/base.css';
 import './styles/index.css';
+import './styles/scrollstory.css';
 import './styles/services.css';
 import './styles/works.css';
 import './styles/contact.css';

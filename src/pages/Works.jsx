@@ -1,8 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useReveal } from '../hooks/useReveal.js';
 import InnerHero from '../components/InnerHero.jsx';
 import MarqueeCta from '../components/MarqueeCta.jsx';
+
+/* three.js тяжёлый — конфигуратор грузится отдельным чанком при открытии */
+const Configurator = lazy(() => import('../components/Configurator.jsx'));
 
 /* Видео и .glb лежат в public/models/ */
 const works = [
@@ -31,16 +34,8 @@ export default function Works() {
   useReveal();
 
   const [active, setActive] = useState(null); // объект works или null
-  const [progress, setProgress] = useState(0);
-  const [progressDone, setProgressDone] = useState(false);
-  const [hintVisible, setHintVisible] = useState(false);
-  const viewerRef = useRef(null);
 
-  /* Открытие модалки */
   const openModal = (work) => {
-    setProgress(0);
-    setProgressDone(false);
-    setHintVisible(false);
     setActive(work);
     document.body.style.overflow = 'hidden';
   };
@@ -58,33 +53,6 @@ export default function Works() {
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, []);
-
-  /* События model-viewer: прогресс загрузки и скрытие подсказки */
-  useEffect(() => {
-    if (!active) return;
-    const viewer = viewerRef.current;
-    if (!viewer) return;
-
-    const onProgress = (e) => {
-      const pct = e.detail.totalProgress * 100;
-      setProgress(pct);
-      if (pct >= 100) {
-        setTimeout(() => setProgressDone(true), 500);
-        setTimeout(() => setHintVisible(true), 700);
-      }
-    };
-    const onCamera = () => setHintVisible(false);
-    const onError = (e) => console.error('model-viewer error', e);
-
-    viewer.addEventListener('progress', onProgress);
-    viewer.addEventListener('camera-change', onCamera, { once: true });
-    viewer.addEventListener('error', onError);
-    return () => {
-      viewer.removeEventListener('progress', onProgress);
-      viewer.removeEventListener('camera-change', onCamera);
-      viewer.removeEventListener('error', onError);
-    };
-  }, [active]);
 
   /* Сброс overflow при уходе со страницы с открытой модалкой */
   useEffect(() => () => { document.body.style.overflow = ''; }, []);
@@ -104,7 +72,7 @@ export default function Works() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                 <path d="M5 3l14 9-7 1-3 7z" />
               </svg>
-              Нажмите на карточку — откроется 3D-модель
+              Нажмите на карточку — откроется 3D-конфигуратор
             </p>
           </div>
 
@@ -123,6 +91,7 @@ export default function Works() {
                 </div>
                 <div className="work-info">
                   <h3>{w.title}</h3>
+                  <p>Покрутите модель и подберите цвет под свой проект</p>
                 </div>
               </div>
             ))}
@@ -130,15 +99,18 @@ export default function Works() {
         </div>
       </section>
 
-      {/* 3D MODAL */}
+      {/* 3D CONFIGURATOR MODAL */}
       <div className={'modal3d' + (active ? ' open' : '')} role="dialog" aria-modal="true">
         <div className="modal3d-backdrop" onClick={closeModal}></div>
         <div className="modal3d-inner">
           <div className="modal3d-head">
             <div className="modal3d-meta">
-              <span className="modal3d-tag"></span>
+              <span className="modal3d-tag">3D-конфигуратор</span>
               <h2 className="modal3d-title">{active?.title || ''}</h2>
-              <p className="modal3d-desc"></p>
+              <p className="modal3d-desc">
+                Выберите узел или деталь и подберите цвет: металл — порошковая покраска RAL,
+                дерево — тонировка массива.
+              </p>
             </div>
             <button className="modal3d-close" aria-label="Закрыть" onClick={closeModal}>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -148,39 +120,15 @@ export default function Works() {
             </button>
           </div>
 
-          <div className="modal3d-viewer-wrap">
-            {active && (
-              <model-viewer
-                ref={viewerRef}
-                src={active.model}
-                camera-controls=""
-                auto-rotate=""
-                style={{ width: '100%', height: '520px', display: 'block' }}
-              >
-                <div className="modal3d-progress-wrap" slot="progress-bar">
-                  <div
-                    className="modal3d-progress-bar"
-                    style={{
-                      width: `${progress}%`,
-                      opacity: progressDone ? 0 : 1,
-                    }}
-                  ></div>
-                </div>
-              </model-viewer>
-            )}
-
-            <div className="modal3d-hint" style={{ opacity: hintVisible ? 1 : 0 }}>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 8v4l3 3" />
-              </svg>
-              Перетащите для вращения · Прокрутите для зума
-            </div>
-          </div>
+          {active && (
+            <Suspense fallback={<div className="cfg-fallback">Загружаем 3D…</div>}>
+              <Configurator work={active} key={active.model} />
+            </Suspense>
+          )}
 
           <div className="modal3d-foot">
             <Link to="/contact" className="btn-solid" onClick={closeModal}>
-              Заказать данную работу →
+              Заказать в этом цвете →
             </Link>
           </div>
         </div>
