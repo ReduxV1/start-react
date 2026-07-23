@@ -1,7 +1,10 @@
-import { Fragment } from 'react';
+import { Fragment, Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import { useReveal } from '../hooks/useReveal.js';
 import MarqueeCta from '../components/MarqueeCta.jsx';
+
+/* three.js тяжёлый — грузим 3D-секцию отдельным чанком */
+const ScrollStory = lazy(() => import('../components/ScrollStory.jsx'));
 
 const tickerItems = [
   'Лазерная резка',
@@ -15,10 +18,10 @@ const tickerItems = [
 const services = [
   { n: '01', hash: 'laser',    name: 'Лазерная резка',          desc: 'Сталь, нержавейка, алюминий · до 20 мм' },
   { n: '02', hash: 'bending',  name: 'Гибка листового металла', desc: 'Пресс до 3000 мм · любой угол' },
-  { n: '03', hash: 'assembly', name: 'Отвёрточная сборка',      desc: 'Сборка, крепёж, упаковка' },
-  { n: '04', hash: 'painting', name: 'Порошковая покраска',     desc: 'Все цвета RAL · антикоррозийная' },
-  { n: '05', hash: 'mig',      name: 'Сварка полуавтоматом',    desc: 'MIG/MAG · конструкции любой сложности' },
-  { n: '06', hash: 'tig',      name: 'Аргонодуговая сварка',    desc: 'TIG · алюминий, нержавейка, медь' },
+  { n: '03', hash: 'mig',      name: 'Сварка полуавтоматом',    desc: 'MIG/MAG · конструкции любой сложности' },
+  { n: '04', hash: 'tig',      name: 'Аргонодуговая сварка',    desc: 'TIG · алюминий, нержавейка, медь' },
+  { n: '05', hash: 'painting', name: 'Порошковая покраска',     desc: 'Все цвета RAL · антикоррозийная' },
+  { n: '06', hash: 'assembly', name: 'Отвёрточная сборка',      desc: 'Сборка, крепёж, упаковка' },
 ];
 
 const why = [
@@ -91,12 +94,17 @@ export default function Home() {
         </div>
       </div>
 
+      {/* 3D SCROLL STORY */}
+      <Suspense fallback={<section className="story" />}>
+        <ScrollStory />
+      </Suspense>
+
       {/* SERVICES */}
       <section className="section">
         <div className="container">
           <div className="sec-head">
             <div className="sec-meta">
-              <span className="sec-num">01</span>
+              <span className="sec-num">02</span>
               <span className="sec-tag">Что мы делаем</span>
             </div>
             <h2 className="sec-title">6 видов <em>обработки металла</em></h2>
@@ -119,7 +127,7 @@ export default function Home() {
         <div className="container">
           <div className="sec-head">
             <div className="sec-meta">
-              <span className="sec-num">02</span>
+              <span className="sec-num">03</span>
               <span className="sec-tag">Почему мы</span>
             </div>
           </div>

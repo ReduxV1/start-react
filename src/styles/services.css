@@ -2,12 +2,96 @@
    SERVICES.CSS — Страница услуг
    ============================================= */
 
+/* FACTS STRIP под шапкой */
+.svc-facts {
+  border-bottom: 1px solid var(--border);
+  background: var(--ink-2);
+}
+
+.svc-facts-inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.svc-fact {
+  padding: 22px 24px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.svc-fact:last-child { border-right: none; }
+
+.svc-fact-n {
+  font-family: var(--ff-display);
+  font-size: clamp(24px, 2.6vw, 34px);
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.svc-fact-l {
+  font-family: var(--ff-cond);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* LAYOUT: sticky-оглавление + список услуг */
+.svc-layout {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.svc-rail {
+  position: sticky;
+  top: calc(var(--nav-h) + 24px);
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border);
+}
+
+.svc-rail-title {
+  font-family: var(--ff-cond);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 0 0 14px 18px;
+}
+
+.svc-rail-link {
+  font-family: var(--ff-cond);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 9px 0 9px 18px;
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  transition: color 0.25s, border-color 0.25s, background 0.25s;
+}
+
+.svc-rail-link:hover { color: var(--muted-hi); }
+
+.svc-rail-link.on {
+  color: var(--text);
+  border-left-color: var(--accent);
+  background: linear-gradient(to right, var(--accent-dim), transparent);
+}
+
+.svc-rail-n { color: var(--accent); margin-right: 4px; }
+
 /* SERVICES LIST — стиль pf-item из оригинала */
 .svc-list { display: flex; flex-direction: column; }
 
 .svc-detail {
   display: grid;
-  grid-template-columns: 80px 1fr 240px;
+  grid-template-columns: 64px 1fr 300px;
   align-items: stretch;
   border-top: 1px solid var(--border);
   transition: background 0.4s var(--ease);
@@ -92,23 +176,63 @@
   background: var(--surface);
   flex-shrink: 0;
 }
-.svc-photo-placeholder {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 10px; padding: 24px; height: 100%; min-height: 160px;
+/* 3D-ВСТАВКА В БЛОКЕ УСЛУГИ */
+.svcv {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 230px;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
 }
-.svc-photo-placeholder svg { width: 32px; height: 32px; color: var(--accent); opacity: 0.25; }
-.svc-photo-placeholder span {
-  font-family: var(--ff-cond); font-size: 10px;
-  letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
-  text-align: center;
+
+.svcv:active { cursor: grabbing; }
+
+.svcv canvas { display: block; }
+
+.svcv-label {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--ff-cond);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 /* PROCESS */
+.proc-track {
+  height: 2px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.proc-track span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(to right, var(--accent), var(--accent-2));
+  transition: width 0.2s linear;
+}
+
 .process-row {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   border: 1px solid var(--border);
+  border-top: none;
 }
+
+.proc-step.lit .proc-n { color: rgba(91,138,245,0.45); }
+.proc-step.lit h4 { color: var(--accent); }
 .proc-step {
   padding: 40px 28px;
   border-right: 1px solid var(--border);
@@ -121,37 +245,49 @@
   font-size: 56px; font-weight: 400;
   color: rgba(91,138,245,0.1);
   line-height: 1; margin-bottom: 16px;
+  transition: color 0.4s;
 }
+.proc-step h4 { transition: color 0.4s; }
 .proc-step h4 { font-family: var(--ff-display); font-size: 20px; font-weight: 400; margin-bottom: 8px; }
 .proc-step p { font-size: 13px; color: var(--muted-hi); line-height: 1.65; }
 
-/* MATERIALS */
-.mat-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2px;
-}
-.mat-card {
-  background: var(--ink-2);
+/* MATERIALS — инженерная таблица-спецификация */
+.mat-table {
   border: 1px solid var(--border);
-  padding: 32px 28px;
-  transition: border-color 0.3s, background 0.3s;
-  position: relative;
-  overflow: hidden;
 }
-.mat-card::after {
-  content: '';
-  position: absolute; bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(to right, var(--accent), var(--accent-2));
-  transform: scaleX(0);
-  transition: transform 0.4s var(--ease);
+
+.mat-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1.1fr 0.9fr 1.4fr;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--muted-hi);
+  transition: background 0.3s;
 }
-.mat-card:hover { background: var(--ink-3); border-color: var(--border-hi); }
-.mat-card:hover::after { transform: scaleX(1); }
-.mat-icon { font-size: 28px; margin-bottom: 16px; display: block; }
-.mat-card h4 { font-family: var(--ff-display); font-size: 20px; font-weight: 400; margin-bottom: 8px; }
-.mat-card p { font-size: 13px; color: var(--muted-hi); }
+
+.mat-row:last-child { border-bottom: none; }
+.mat-row:not(.mat-row-head):hover { background: var(--ink-3); }
+
+.mat-row-head {
+  font-family: var(--ff-cond);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--ink-2);
+  padding: 12px 28px;
+}
+
+.mat-name {
+  font-family: var(--ff-display);
+  font-size: 18px;
+  color: var(--text);
+}
+
+.mat-row [data-label]::before { display: none; }
 
 /* CTA block */
 .svc-cta-block {
@@ -179,20 +315,42 @@
 .svc-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
 /* RESPONSIVE */
+@media (max-width: 1024px) {
+  .svc-layout { grid-template-columns: 1fr; gap: 0; }
+  .svc-rail { display: none; }
+}
+
 @media (max-width: 900px) {
   .svc-detail { grid-template-columns: 56px 1fr; }
-  .svc-detail-photo { display: none; }
+  .svc-detail-photo {
+    grid-column: 2;
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+  .svcv { min-height: 200px; }
   .svc-detail-body { padding: 24px 20px; }
   .process-row { grid-template-columns: 1fr 1fr; }
   .proc-step:nth-child(2) { border-right: none; }
   .proc-step { border-bottom: 1px solid var(--border); }
-  .mat-grid { grid-template-columns: 1fr 1fr; }
+  .svc-facts-inner { grid-template-columns: 1fr 1fr; }
+  .svc-fact:nth-child(2) { border-right: none; }
+  .svc-fact:nth-child(1),
+  .svc-fact:nth-child(2) { border-bottom: 1px solid var(--border); }
+  .mat-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 16px;
+    padding: 16px 20px;
+    font-size: 13px;
+  }
+  .mat-row-head { display: none; }
+  .mat-name { grid-column: 1 / -1; }
   .svc-cta-block { padding: 48px 32px; }
 }
+
 @media (max-width: 560px) {
   .svc-detail { grid-template-columns: 40px 1fr; }
   .svc-detail-num { font-size: 10px; }
   .process-row { grid-template-columns: 1fr; }
   .proc-step { border-right: none; }
-  .mat-grid { grid-template-columns: 1fr 1fr; }
+  .mat-row { grid-template-columns: 1fr; }
 }
